@@ -1,8 +1,9 @@
 {% load bootstrap5 %}
+{% load static %} 
 
 <!DOCTYPE html>
 <html>
-{% block head %}
+
 
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -13,17 +14,19 @@
 {% endif %}
 <meta name="description" content="">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" type="text/css" href="{% static 'styles/base.css' %}">
 
 
 {% block styles %}
-{{block.super}}
-{% endblock%}
+
 {% bootstrap_css %}
 {% bootstrap_messages %}
-{% endblock %}
+<link rel="stylesheet" type="text/css" href="{% static 'styles/base.css' %}">
+<script src="{% static 'fontawesomefree/js/all.min.js' %}"></script>
+{% endblock%}
+
 
 {% block content %}
+
 {% endblock %}
 
 {% block script %}

@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     
     # third party applications
     'bootstrap5',
+    'fontawesomefree'
 ]
 
 MIDDLEWARE = [

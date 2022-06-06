@@ -2,12 +2,13 @@ from django.urls import path, include
 from core import views 
 from django.conf.urls.static import static
 from django.conf import settings
-
+from django_registration.backends.one_step.views import RegistrationView
+from django.contrib.auth import views as auth_views
 # url pattern
 urlpatterns = [
     path('', views.index, name = 'index'),
     path('accounts/', include([
-        path('login/', views.login, name='accounts/login/'),
+        path('login/', auth_views.LoginView.as_view(next_page = 'home/'), name='accounts/login/'),
         path('register/home/', views.home, name = 'accounts/register/home/'), 
         path('login/home/', views.home, name = 'accounts/login/home/'),
     ])),   

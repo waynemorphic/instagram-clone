@@ -28,7 +28,7 @@ class Profile_Model(models.Model):
 
     profile_photo = models.ImageField(upload_to = 'static/media', default = '')
     bio = HTMLField()
-    user = models.ForeignKey(User_Model, on_delete = models.CASCADE)
+    user = models.ForeignKey(User_Model, on_delete = models.CASCADE, null=True)
 
     def __str__(self):
         return self.bio
@@ -48,14 +48,14 @@ class Image_Model(models.Model):
         image, image_name, image_caption, likes, comments, post_date, profile, user
     '''
     
-    image = models.ImageField(upload_to = 'static/media', default = '')
+    image = models.ImageField(upload_to = 'pictures/', default = '')
     image_name = models.CharField(max_length = 50)
     image_caption = HTMLField()
-    likes = models.IntegerField()
-    comments = HTMLField()
+    likes = models.IntegerField(null = True)
+    comments = HTMLField(null = True)
     post_date = models.DateTimeField(auto_now = True)
-    profile = models.ForeignKey(Profile_Model, on_delete = models.CASCADE)
-    user = models.ForeignKey(User_Model, on_delete = models.CASCADE)    
+    profile = models.ForeignKey(Profile_Model, on_delete = models.CASCADE, null = True)
+    user = models.ForeignKey(User_Model, on_delete = models.CASCADE, null = True)    
     
     def __str__(self):
         return self.image_name
@@ -73,3 +73,7 @@ class Image_Model(models.Model):
     def search_image(cls, search_term):
         find_image = cls.objects.filter(image_name__icontains = search_term)
         return find_image
+
+class NewsLetterRecipients(models.Model):
+    name = models.CharField(max_length = 30)
+    email = models.EmailField()

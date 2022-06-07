@@ -20,12 +20,12 @@ This is a clone for the popular social media platform, Instagram. I have develop
 ## SET UP GUIDELINES FOR DEVELOPERS
  - In your Ubuntu terminal, create a directory in your prefered directory
  - Run the command `git clone https://github.com/waynemorphic/instagram-clone.git`
- - Run `cd social-admin` to move into the clone repository directory
+ - Run `cd instagram-clone` to move into the clone repository directory
  - Open the source code in your preferred directory. `code . ` to run in VSCODE while in the path of the created directory.
  - Ensure to install a virtual environment such as virtualenvwrapper to run the application in the virtual environment
 
 ## LIVE LINK
-
+'https://instagram-cv.herokuapp.com/'
 
 ## AUTHOR
 Wayne Kirimi

@@ -29,10 +29,11 @@
             {% else %}
             <p> {{user.username| capfirst}} has no bio </p>            
             {% endif %}
-            <a href="{% url 'update profile' %}">Update Bio</a>
+            
             <button type="submit" href="{% url 'delete_stuff' %}"><i class="fa-solid fa-trash-can"></i></button>
         </div>       
         {% endfor %}
+        <a href="{% url 'update profile' %}">Update Bio</a>
         <div class="container">
             {% for post in all_pictures %}
             <img src="{{post.image.url}}" class="img-thumbnail" alt="..." width="250" height="250">

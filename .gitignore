@@ -1,0 +1,10 @@
+.env
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'instagram',
+        'USER': 'wayne',
+        'PASSWORD': '123',
+    }
+}

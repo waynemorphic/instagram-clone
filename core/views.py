@@ -82,7 +82,7 @@ def update_profile(request):
         if profile_form.is_valid():
             profile_picture = profile_form.save(commit = False)
             bio = profile_form.cleaned_data['bio']
-            profile_picture = profile_form.cleaned_data['profile_picture']
+            profile_picture = profile_form.cleaned_data['profile_photo']
             profile_form.bio = bio
             profile_form.profile_picture = profile_picture
             profile_form.save()

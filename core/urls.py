@@ -14,9 +14,12 @@ urlpatterns = [
     ])),   
     path('home/', include([
         path('', views.home, name = 'home/'),
-        path('new_post/', views.post, name = 'new post'),
-        path('comment/', views.comment, name = 'comment'),
+        path('new_post/', views.new_post, name = 'new post'),
+        path('comment/', views.comment, name = 'post comment'),
         path('profile/', views.profile, name = 'profile'),
+        path('profile/delete/', views.delete_stuff, name = 'delete_stuff'),
+        path('profile/update_profile', views.update_profile, name = 'update profile'),
+        path('search/', views.search_results, name='search_results')
     ])),
     
    

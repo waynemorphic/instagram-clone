@@ -1,0 +1,43 @@
+{% extends 'home/base.html' %}
+{% load static %}
+{% load bootstrap5 %}
+
+{% block content %}
+<div class="container">
+    <a class="navbar-brand" href="{% url 'home/' %}"
+        style="font-family: 'Pattaya', sans-serif; letter-spacing: 1px; font-size: 1.5rem; padding: 1rem; color:black"><span><i
+                class="fa-brands fa-instagram fa-xl"></i></span> Instagram</a>
+    <div class="row">
+        {% for prof in user_profile %}
+        <div class="col-md-4 p-4">
+            <div class="d-flex align-items-center">
+                <div class="flex-shrink-0">
+                    {% if prof.profile_photo %}
+                    <img src="{{prof.profile_photo.url}}" class="img-thumbnail" style="width:50px; height: 50px;">
+                    {%else%}
+                    <p>No profile picture</p>
+                    <a href="{% url 'update profile' %}">Update Bio</a>
+                    {% endif %}
+                </div>
+                <div class="flex-grow-1 ms-3">
+                    <h3 class="card-title">{{user.username | capfirst}}</h3>
+
+                </div>
+            </div>
+            {% if prof.bio %}
+            <p>{{prof.bio}}</p>
+            {% else %}
+            <p> {{user.username| capfirst}} has no bio </p>            
+            {% endif %}
+            <a href="{% url 'update profile' %}">Update Bio</a>
+            <button type="submit" href="{% url 'delete_stuff' %}"><i class="fa-solid fa-trash-can"></i></button>
+        </div>       
+        {% endfor %}
+        <div class="container">
+            {% for post in all_pictures %}
+            <img src="{{post.image.url}}" class="img-thumbnail" alt="..." width="250" height="250">
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}

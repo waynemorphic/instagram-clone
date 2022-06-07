@@ -7,8 +7,8 @@
 
 <nav class="navbar navbar-expand{-sm|-md|-lg|-xl|-xxl}">
     <div class="container-fluid">
-        <a class="navbar-brand" href="#"
-            style="font-family: 'Pattaya', sans-serif; letter-spacing: 1px; font-size: 1.5rem; padding: 1rem;"><span><i
+        <a class="navbar-brand" href="{% url 'home/' %}"
+            style="font-family: 'Pattaya', sans-serif; letter-spacing: 1px; font-size: 1.5rem; padding: 1rem; color:black"><span><i
                     class="fa-brands fa-instagram fa-xl"></i></span> Instagram</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo02"
             aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation" label="Menu">
@@ -17,42 +17,82 @@
         <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link active" href="{% url 'home/' %}"><span><i class="fa-solid fa-house-user"></i></span> Home</a>
+                    <a class="nav-link active" href="{% url 'home/' %}"><span><i
+                                class="fa-solid fa-house-user"></i></span> Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'new post' %}"><span><i class="fa-solid fa-images"></i></span> Add Post</a>
+                    <a class="nav-link" href="{% url 'new post' %}"><span><i class="fa-solid fa-images"></i></span> Add
+                        Post</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#"><span><i class="fa-solid fa-bell"></span></i> Notifications</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'profile' %}"><span><i class="fa-solid fa-user"></i></span> Profile</a>
+                    <a class="nav-link" href="{% url 'profile' %}"><span><i class="fa-solid fa-user"></i></span>
+                        Profile</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Logout</a>
+                    <a class="nav-link" href="{% url 'logout/' %}"><span><i class="fa-solid fa-power-off"></i></span> Logout</a>
                 </li>
             </ul>
+            <form class="d-flex" role="search" action="{% url 'search_results' %}">
+                <input class="form-control me-2" type="text" placeholder="Search by Image Name" aria-label="Search"
+                    name="pic">
+                <button class="btn btn-outline-success" type="submit">Search</button>
+            </form>
         </div>
     </div>
 </nav>
 
 <div class="container">
-    <h4 class="logo">Instagram</h4>
+    <form class="row mb-3" action="{%url 'home/' %}" method="post" enctype="multipart/form-data">
+        {%csrf_token%}
+    
+        {% bootstrap_form sub_form layout='inline' %}
+        
+        <input type="submit" value="Subscribe" class="btn btn-primary col-sm btn-sm">
+      </form>
     <!-- user stories here in rounded images -->
     {% for image in show_images %}
-    <div class="card" style="width: 18rem;">
-        <img src="{{image.image.url}}" class="card-img-top" alt="...">
-        <div class="card-body">
-            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
-                content.</p>
-            <div class="d-flex flex-row mb-3">
-                <div class="p-2"><i class="fa-solid fa-heart"></i></div>
-                <div class="p-2" href="{% url 'comment' %}"><i class="fa-solid fa-comments"></i></div>
+    <img src="{{image.image.url}}" class="img-fluid" alt="{{image.image_name}}" width="500" height="300">
+    <div class="card-body p-3" style="background-color: black; margin-bottom: 5px; width:500px; height: 300px;">
+        {% for prof in user_profile %}
+        {% if prof.profile_photo %}
+        <div class="d-flex align-items-center">
+            <div class="flex-shrink-0">
+                <img src="{{prof.profile_photo.url}}" alt="{{prof.user.id}}" class="img-thumbnail" style="width:50px; height: 50px;">
             </div>
-            {% endfor %}
+            <div class="flex-grow-1 ms-3">
+                <h5 class="card-title" style="color: firebrick">{{user.username | capfirst}}</h5>
+                
+            </div>
+        </div>
+        {% endif%}
+        {% endfor %} 
+        <p class="card-text" style="color: white;">{{image.image_caption | capfirst}}<br>#{{image.image_name}}<br>Posted {{image.post_date | timesince }} ago</p>
+        <div class="d-flex flex-row mb-3">
+            <div class="p-2">
+               <a href="" ><i class="fa-solid fa-heart fa-2xl" onclick="onClick(like)"></i></a>
+                <p class="like-count"><strong>10</strong></p>
+            </div>
+            <div class="p-2">
+                <a href="{% url 'post comment' %}"><i class="fa-solid fa-comments fa-2xl"></i></a>
+                <!-- <p style="display:inline-block">{{image.comments}}</p> -->
+                <p class="comment-count"><strong>10</strong></p>
+
+            </div>
         </div>
     </div>
-
+    {% endfor %}
 </div>
-<h3>Hello</h3>
+<script>
+    function onClick(element){
+        document.getElementsByClassName('fa-solid fa-heart fa-2xl') = element.strong;
+    
+        for (let i = 0; i > 0; i++){
+          b += i
+        }
+        
+    }
+</script>
 {% endblock %}

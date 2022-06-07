@@ -1,0 +1,16 @@
+{% extends 'home/base.html' %}
+{% load bootstrap5 %}
+
+{% block content %}
+{{ block.super }}
+<div class="container">
+    <a class="navbar-brand" href="{% url 'home/' %}"
+        style="font-family: 'Pattaya', sans-serif; letter-spacing: 1px; font-size: 1.5rem; padding: 1rem; color:black"><span><i
+                class="fa-brands fa-instagram fa-xl"></i></span> Instagram</a>
+    <form action="{% url 'new post'%}" enctype="multipart/form-data" method="post">
+        {% csrf_token %}
+        {% bootstrap_form form %}
+        <input type="submit" value="Post">
+    </form>
+</div>
+{% endblock %}

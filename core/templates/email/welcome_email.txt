@@ -1,0 +1,2 @@
+Hello {{name}}
+Welcome to the Instagram clone. Connect with friends and family and share pictures and videos with new people.

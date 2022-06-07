@@ -13,20 +13,23 @@ class UserLoginForm(forms.Form):
     email = forms.EmailField(label = 'Email', required = True)
     password = forms.CharField(label = 'Password', required = True)
     
-class NewPostForm(forms.Form):
+class NewPostForm(forms.ModelForm):
     class Meta:
         model = Image_Model
         exclude = ['user', 'post_date', 'likes', 'comments', 'profile']
-    # image = forms.ImageField(label = 'Upload Image')
-    # image_name = forms.CharField(label = 'Image Name', max_length=50)
-    # image_caption = forms.CharField(label = 'Image Caption', max_length = 100)
+  
 
-class CommentForm(forms.Form):
-    comments = forms.CharField(widget = forms.Textarea)
+class CommentForm(forms.ModelForm):
+    class Meta:
+        model = Image_Model
+        exclude = ['image','image_name','image_caption','user', 'post_date', 'likes', 'profile']
 
-class ProfileForm(forms.Form):
+class ProfileForm(forms.ModelForm):
     class Meta:
         model = Profile_Model
         exclude = ['user']
-    # profile_picture = forms.ImageField(label = 'Upload Profile Picture')
-    # bio = forms.Textarea()
+    
+    
+class NewsLetterForm(forms.Form):
+    your_name = forms.CharField(label='First Name',max_length=30)
+    email = forms.EmailField(label='Email')

@@ -36,7 +36,7 @@
         <a href="{% url 'update profile' %}">Update Bio</a>
         <div class="container">
             {% for post in all_pictures %}
-            <img src="{{post.image.url}}" class="img-thumbnail" alt="..." width="250" height="250">
+            <img src="{{post.image.url}}" class="img-thumbnail" alt="{{post.image_name}}" width="250" height="250">
             {% endfor %}
         </div>
     </div>

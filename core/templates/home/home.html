@@ -5,23 +5,23 @@
 {% block content %}
 {{block.super}}
 
-<nav class="navbar navbar-expand{-sm|-md|-lg|-xl|-xxl}">
+<nav class="navbar navbar-expand-lg">
     <div class="container-fluid">
         <a class="navbar-brand" href="{% url 'home/' %}"
-            style="font-family: 'Pattaya', sans-serif; letter-spacing: 1px; font-size: 1.5rem; padding: 1rem; color:black"><span><i
-                    class="fa-brands fa-instagram fa-xl"></i></span> Instagram</a>
+            style="font-family: 'Pattaya', sans-serif; letter-spacing: 1px; font-size: 1.2rem; padding: 0.5rem; color:black"><span><i
+                    class="fa-brands fa-instagram fa-xl" style="color:red"></i></span> Instagram</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo02"
             aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation" label="Menu">
             <span><i class="fa-solid fa-bars-staggered fa-xl"></i></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0" style="font-size:0.8rem;">
                 <li class="nav-item">
                     <a class="nav-link active" href="{% url 'home/' %}"><span><i
                                 class="fa-solid fa-house-user"></i></span> Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'new post' %}"><span><i class="fa-solid fa-images"></i></span> Add
+                    <a class="nav-link" href="{% url 'new post' %}"><span><i class="fa-solid fa-images" style="color: green;"></i></span> Add
                         Post</a>
                 </li>
                 <li class="nav-item">
@@ -32,11 +32,12 @@
                         Profile</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'logout/' %}"><span><i class="fa-solid fa-power-off"></i></span> Logout</a>
+                    <a class="nav-link" href="{% url 'logout/' %}"><span><i class="fa-solid fa-power-off"></i></span>
+                        Logout</a>
                 </li>
             </ul>
-            <form class="d-flex" role="search" action="{% url 'search_results' %}">
-                <input class="form-control me-2" type="text" placeholder="Search by Image Name" aria-label="Search"
+            <form class="d-flex gap-1" role="search" action="{% url 'search_results' %}">
+                <input class="form-control me-2 " type="text" placeholder="Search by Image Name" aria-label="Search"
                     name="pic">
                 <button class="btn btn-outline-success" type="submit">Search</button>
             </form>
@@ -45,40 +46,57 @@
 </nav>
 
 <div class="container">
-    <form class="row mb-3" action="{%url 'home/' %}" method="post" enctype="multipart/form-data">
-        {%csrf_token%}
-    
-        {% bootstrap_form sub_form layout='inline' %}
-        
-        <input type="submit" value="Subscribe" class="btn btn-primary col-sm btn-sm">
-      </form>
+
+    <div class="toast fade show float-md-end m-3" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-header">
+    <i class="fa-brands fa-instagram fa-xl" style="color:firebrick"></i>
+            <strong class="me-auto"
+                style="font-family: 'Pattaya', sans-serif; letter-spacing: 1.5px; font-size: 1rem; padding: 3px; color:black">Instagram</strong>
+            <small>Mail List Subscription</small>
+            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div class="toast-body">
+            <form class="row mb-4 gap-2 " action="{%url 'home/' %}" method="post" enctype="multipart/form-data">
+                {%csrf_token%}
+
+                {% bootstrap_form sub_form layout='inline' %}
+                <buttton type="submit" class="btn btn-primary btn-sm col-md-4 m-sm-2">Subscribe</buttton>
+                
+            </form>
+        </div>
+    </div>
+
+
     <!-- user stories here in rounded images -->
     {% for image in show_images %}
     <img src="{{image.image.url}}" class="img-fluid" alt="{{image.image_name}}" width="500" height="300">
-    <div class="card-body p-3" style="background-color: black; margin-bottom: 5px; width:500px; height: 300px;">
+    <div class="card-body p-1" style="background-color: black; margin-bottom: 5px; width:500px; height: auto;">
         {% for prof in user_profile %}
         {% if prof.profile_photo %}
         <div class="d-flex align-items-center">
             <div class="flex-shrink-0">
-                <img src="{{prof.profile_photo.url}}" alt="{{prof.user.id}}" class="img-thumbnail" style="width:50px; height: 50px;">
+                <img src="{{prof.profile_photo.url}}" alt="{{prof.user.id}}" class="img-thumbnail rounded me-2"
+                    style="width:50px; height:50px;">
             </div>
             <div class="flex-grow-1 ms-3">
-                <h5 class="card-title" style="color: firebrick">{{user.username | capfirst}}</h5>
-                
+                <h5 class="card-title" style="color: firebrick">{{image.user.username | capfirst}}</h5>
+
             </div>
         </div>
         {% endif%}
-        {% endfor %} 
-        <p class="card-text" style="color: white;">{{image.image_caption | capfirst}}<br>#{{image.image_name}}<br>Posted {{image.post_date | timesince }} ago</p>
+        {% endfor %}
+        <p class="card-text" style="color: white;">{{image.image_caption | capfirst}}<br>#{{image.image_name}}<br>Posted
+            {{image.post_date | timesince }} ago</p>
         <div class="d-flex flex-row mb-3">
             <div class="p-2">
-               <a href="" ><i class="fa-solid fa-heart fa-2xl" onclick="onClick(like)"></i></a>
-                <p class="like-count"><strong>10</strong></p>
+                <a href=""><i class="fa-solid fa-heart fa-2xl" onclick="onClick(like)"></i></a>
+                <p><strong>{{image.likes}}</strong></p>
             </div>
             <div class="p-2">
                 <a href="{% url 'post comment' %}"><i class="fa-solid fa-comments fa-2xl"></i></a>
                 <!-- <p style="display:inline-block">{{image.comments}}</p> -->
-                <p class="comment-count"><strong>10</strong></p>
+        
+                <p style="color: white;"> <strong>{{image.comments}}</strong></p>
 
             </div>
         </div>
@@ -86,13 +104,13 @@
     {% endfor %}
 </div>
 <script>
-    function onClick(element){
+    function onClick(element) {
         document.getElementsByClassName('fa-solid fa-heart fa-2xl') = element.strong;
-    
-        for (let i = 0; i > 0; i++){
-          b += i
+
+        for (let i = 0; i > 0; i++) {
+            b += i
         }
-        
+
     }
 </script>
 {% endblock %}

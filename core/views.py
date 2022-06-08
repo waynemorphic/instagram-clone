@@ -57,7 +57,7 @@ def new_post(request):
 def comment(request):
     current_user = request.user
     if request.method == 'POST':
-        comment_form = CommentForm()
+        comment_form = CommentForm(request.POST)
         if comment_form.is_valid():
             new_comment = comment_form.save(commit = True)
             User_Model.username = current_user
